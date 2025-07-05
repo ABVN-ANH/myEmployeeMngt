@@ -1,0 +1,23 @@
+{
+  "generationParameters": {
+    "generationDate": "Fri Jul 04 2025 09:21:41 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local Cap",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/EmployeeManagementService/",
+    "appName": "websapui5",
+    "appTitle": "Employee Management",
+    "appDescription": "An SAP Fiori application.",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.136.2",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.18.1",
+    "template": "Basic V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "In order to launch the generated app, simply start your CAP project (```mvn spring-boot:run```) and navigate to the following location in your browser:\n\nhttp://localhost:8080/websapui5/webapp/index.html"
+  }
+}
