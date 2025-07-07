@@ -51,7 +51,7 @@
                         <Column />
                     </columns>
                     <items>
-                        <ColumnListItem vAlign="Middle" type="Active" press="onEditEmployee">
+                        <ColumnListItem vAlign="Middle" type="Active" press="handleUpdateEmployeePress">
                             <cells>
                                 <Text text="{department/name}" />
                                 <Text text="{firstName} {lastName}" />
@@ -59,8 +59,8 @@
                                 <Text text="{dateOfBirth}" />
                                 <Text text="{role/name}" />
                                 <Text text="{hireDate}" />
-                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteButton}" type="Transparent" press="onDeleteEmployee" visible="{= String(${userInfo>/userRole}) === 'Admin'}" />
-                                <Button icon="sap-icon://navigation-right-arrow" tooltip="{i18n>editButton}" type="Transparent" press="onEditEmployee" />
+                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteButton}" type="Transparent" press="handleDeleteEmployeePress" visible="{= String(${userInfo>/userRole}) === 'Admin'}" />
+                                <Button icon="sap-icon://navigation-right-arrow" tooltip="{i18n>editButton}" type="Transparent" press="handleUpdateEmployeePress" />
                             </cells>
                         </ColumnListItem>
                     </items>
