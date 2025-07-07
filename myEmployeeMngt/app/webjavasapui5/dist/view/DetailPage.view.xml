@@ -1,0 +1,9 @@
+<mvc:View controllerName="webjavasapui5.controller.DetailPage"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <ScrollContainer id="detailScrollContainer" vertical="true" height="100%">
+        <core:Fragment fragmentName="webjavasapui5.view.fragment.Header" type="XML" />
+        <core:Fragment fragmentName="webjavasapui5.view.fragment.ChangePage" type="XML" />
+    </ScrollContainer>
+</mvc:View>

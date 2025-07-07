@@ -1,2 +1,1 @@
-
-using from './websapui5/annotations';
+using from './webjavasapui5/annotations';

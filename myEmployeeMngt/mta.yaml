@@ -3,138 +3,141 @@ ID: myEmployeeMngt
 description: A simple CAP project.
 version: 1.0.0-SNAPSHOT
 modules:
-  - name: myEmployeeMngt-srv
-    type: java
-    path: srv
-    requires:
-      - name: app-api
-      - name: myEmployeeMngt-db
-      - name: myEmployeeMngt-auth
-      - name: myEmployeeMngt-destination-service
-    properties:
-      JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
-      JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
-      SPRING_PROFILES_ACTIVE: cloud,sandbox
-    provides:
-      - name: srv-api
-        properties:
-          srv-url: ${default-url}
-    parameters:
-      buildpack: sap_java_buildpack_jakarta
-      instances: 1
-    build-parameters:
-      build-result: target/*-exec.jar
-      builder: custom
-      commands:
-        - mvn clean package -DskipTests=true --batch-mode
-
-  - name: myEmployeeMngt-app-content
-    type: com.sap.application.content
-    path: .
-    requires:
-      - name: myEmployeeMngt-repo-host
-        parameters:
-          content-target: true
-    build-parameters:
-      build-result: resources
-      requires:
-        - artifacts:
-            - websapui5.zip
-          name: websapui5
-          target-path: resources/
-  - name: websapui5
-    type: html5
-    path: app/websapui5
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-        - npm ci
-        - npm run build
-      supported-platforms:
-        []
-
-  - name: myEmployeeMngt-db-deployer
-    type: hdb
-    path: db
-    parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: custom
-      commands:
-        - npm run build
-    requires:
-      - name: myEmployeeMngt-db
-
-  - name: myEmployeeMngt
-    type: approuter.nodejs
-    path: app/router
-    parameters:
-      keep-existing-routes: true
-      disk-quota: 256M
-      memory: 256M
-    requires:
-      - name: srv-api
-        group: destinations
-        properties:
-          name: srv-api # must be used in xs-app.json as well
-          url: ~{srv-url}
-          forwardAuthToken: true
-      - name: myEmployeeMngt-destination-service
-      - name: myEmployeeMngt-html5-runtime
-      - name: myEmployeeMngt-auth
-    provides:
-      - name: app-api
-        properties:
-          app-protocol: ${protocol}
-          app-uri: ${default-uri}
-          url: ${default-url}
-resources:
-  - name: myEmployeeMngt-repo-host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-name: myEmployeeMngt-html5-service
-      service-plan: app-host
-  - name: myEmployeeMngt-destination-service
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        HTML5Runtime_enabled: false
-        init_data:
-          instance:
-            destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
-                ProxyType: Internet
-                Type: HTTP
-                URL: https://ui5.sap.com
-            existing_destinations_policy: update
-        version: 1.0.0
-      service: destination
-      service-name: myEmployeeMngt-destination-service
-      service-plan: lite
+- name: myEmployeeMngt-srv
+  type: java
+  path: srv
+  properties:
+    JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
+    JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
+    SPRING_PROFILES_ACTIVE: cloud,sandbox
+  requires:
+  - name: app-api
   - name: myEmployeeMngt-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
   - name: myEmployeeMngt-auth
-    type: org.cloudfoundry.managed-service
+  - name: myEmployeeMngt-destination-service
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: sap_java_buildpack_jakarta
+    instances: 1
+  build-parameters:
+    build-result: target/*-exec.jar
+    builder: custom
+    commands:
+    - mvn clean package -DskipTests=true --batch-mode
+- name: myEmployeeMngt-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: myEmployeeMngt-repo-host
     parameters:
-      service: xsuaa
-      service-plan: application
-      path: ./xs-security.json
-      config:
-        xsappname: myEmployeeMngt-${org}-${space}
-        tenant-mode: dedicated
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - webjavasapui5.zip
+      name: webjavasapui5
+      target-path: resources/
+- name: myEmployeeMngt-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: myEmployeeMngt-db
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+- name: myEmployeeMngt
+  type: approuter.nodejs
+  path: app/router
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: myEmployeeMngt-destination-service
   - name: myEmployeeMngt-html5-runtime
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-plan: app-runtime
+  - name: myEmployeeMngt-auth
+  provides:
+  - name: app-api
+    properties:
+      app-protocol: ${protocol}
+      app-uri: ${default-uri}
+      url: ${default-url}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: webjavasapui5
+  type: html5
+  path: app/webjavasapui5
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: myEmployeeMngt-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: myEmployeeMngt-html5-service
+    service-plan: app-host
+- name: myEmployeeMngt-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: myEmployeeMngt-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: myEmployeeMngt-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: myEmployeeMngt-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: myEmployeeMngt-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: myEmployeeMngt-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: myEmployeeMngt-html5-runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

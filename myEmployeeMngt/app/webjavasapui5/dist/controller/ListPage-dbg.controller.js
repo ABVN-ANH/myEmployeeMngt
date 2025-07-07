@@ -6,11 +6,11 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/MessageToast",
     "../model/formatter",
-    "websapui5/model/models"
+    "webjavasapui5/model/models"
 ], (Controller, JSONModel, Filter, FilterOperator, MessageBox, MessageToast, formatter, model) => {
     "use strict";
 
-    return Controller.extend("websapui5.controller.ListPage", {
+    return Controller.extend("webjavasapui5.controller.ListPage", {
         formatter: formatter,
 
         onInit() {
