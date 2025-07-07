@@ -10,8 +10,8 @@
                 <OverflowToolbar>
                     <Title text="{i18n>detailTitle}"/>
                     <ToolbarSpacer/>
-                    <Button text="{i18n>saveButton}" type="Emphasized" press="onSave" visible="{= ${userInfo>/userRole} === 'Admin' }" class="sapUiSmallMarginEnd"/>
-                    <Button text="{i18n>cancelButton}" type="Emphasized" press="onCancel"/>
+                    <Button text="{i18n>saveButton}" type="Emphasized" press="handleSaveEmployeePress" visible="{= ${userInfo>/userRole} === 'Admin' }" class="sapUiSmallMarginEnd"/>
+                    <Button text="{i18n>cancelButton}" type="Emphasized" press="handleCancelEmployeePress"/>
                 </OverflowToolbar>
             </f:toolbar>
             <f:layout>
