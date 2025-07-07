@@ -23,14 +23,14 @@
                         <f:FormElement label="{i18n>firstName}">
                             <f:fields>
                                 <Input id="firstNameInput2" value="{employee>/firstName}" placeholder="{i18n>firstNameInput}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }" />
-                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                                <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
                             </f:fields>
                         </f:FormElement>
 
                         <f:FormElement label="{i18n>lastName}">
                             <f:fields>
                                 <Input id="lastNameInput2" value="{employee>/lastName}" placeholder="{i18n>lastNameInput}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }" />
-                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                                <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
                             </f:fields>
                         </f:FormElement>
 
@@ -39,7 +39,7 @@
                                 <Select id="departmentSelect2" selectedKey="{employee>/department_ID}" items="{select>/departments}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }">
                                     <core:Item key="{select>key}" text="{select>text}" />
                                 </Select>
-                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                                <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
 
                             </f:fields>
                         </f:FormElement>
@@ -49,7 +49,7 @@
                                 <Select id="roleSelect2" selectedKey="{employee>/role_ID}" items="{select>/roles}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }" change="onRoleChange">
                                     <core:Item key="{select>key}" text="{select>text}" />
                                 </Select>
-                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                                <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
 
                             </f:fields>
                         </f:FormElement>
@@ -66,17 +66,17 @@
 
                         <f:FormElement label="{i18n>dob}">
                             <DatePicker id="dobPicker" value="{employee>/dateOfBirth}" valueFormat="dd MMMM, yyyy" displayFormat="dd MMMM, yyyy" editable="{= ${userInfo>/userRole} === 'Admin' }" />
-                            <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                            <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
                         </f:FormElement>
 
                         <f:FormElement label="{i18n>hireDate}">
                             <DatePicker id="wfromPicker" value="{employee>/hireDate}" valueFormat="dd MMMM, yyyy" displayFormat="dd MMMM, yyyy" editable="{= ${userInfo>/userRole} === 'Admin' }" change=".onHireDateChange" class="sapUiSmallMarginBottom"/>
-                            <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                            <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
                         </f:FormElement>
 
                         <f:FormElement label="{i18n>email}">
                             <Input id="emailInputc" value="{employee>/email}" placeholder="{i18n>emailInput}" type="Email" class="sapUiSmallMarginBottom" valueState="{form>/validation/emailState}" valueStateText="{form>/validation/emailStateText}" change="onEmailChange" editable="{= ${userInfo>/userRole} === 'Admin' }" />
-                            <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                            <Text text="*" class="requireField" visible="{= ${userInfo>/userRole} === 'Admin' }" />
                         </f:FormElement>
 
                         <f:FormElement label="{i18n>inputSalary}">
