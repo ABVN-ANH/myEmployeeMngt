@@ -1,0 +1,128 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "webjavasapui5",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.18.1",
+      "toolsId": "6573e4c3-90c0-4bbc-8ded-d0d68cc215ed"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/EmployeeManagementService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.136.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "webjavasapui5.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "webjavasapui5.view",
+        "async": true,
+        "viewPath": "webjavasapui5.view"
+      },
+      "routes": [
+        {
+          "name": "RouteListPage",
+          "pattern": ":?query:",
+          "target": [
+            "TargetListPage"
+          ]
+        },
+        {
+          "name": "RouteDetailPage",
+          "pattern": "detail/{employeeId}",
+          "target": [
+            "TargetDetailPage"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetListPage": {
+          "id": "ListPage",
+          "name": "ListPage"
+        },
+        "TargetDetailPage": {
+          "id": "DetailPage",
+          "name": "DetailPage"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "webjavasapui5.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

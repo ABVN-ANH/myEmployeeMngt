@@ -1,7 +1,14 @@
 {
-  "welcomeFile": "webjavasapui5/index.html",
+  "welcomeFile": "/index.html",
   "authenticationMethod": "route",
   "routes": [
+    {
+      "source": "^/odata/(.*)$",
+      "target": "/odata/$1",
+      "destination": "myEmployeeMngt-srv-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
     {
       "source": "^/resources/(.*)$",
       "target": "/resources/$1",
@@ -19,12 +26,6 @@
       "target": "$1",
       "service": "html5-apps-repo-rt",
       "authenticationType": "xsuaa"
-    },
-    {
-      "source": "^/?odata/(.*)$",
-      "target": "/odata/$1",
-      "destination": "srv-api",
-      "csrfProtection": true
     }
   ]
 }

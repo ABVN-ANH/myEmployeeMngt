@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
+    xmlns:core="sap.ui.core">
+    <tnt:ToolHeader id="shellLikeToolHeader" class="sapUiTinyMargin">
+        <Image id="sapLogo" src="./image/inu.jpg" press="handleEmpPress" decorative="false" tooltip="Company Logo" width="35px" height="35px">
+            <layoutData>
+                <OverflowToolbarLayoutData id="logoLayoutData" priority="NeverOverflow" />
+            </layoutData>
+        </Image>
+        <Title text="{i18n>title}" wrapping="false">
+            <layoutData>
+                <OverflowToolbarLayoutData id="titleLayoutData" priority="Disappear" />
+            </layoutData>
+        </Title>
+        <ToolbarSpacer id="toolbarSpacer" />
+        <Button id="addButton" type="Emphasized" text="{i18n>addButton}" press="handleAddPress"  class="sapUiSmallMarginEnd" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+        <Button id="emplistButton" type="Emphasized" text="{i18n>listButton}" press="handleEmpPress" class="sapUiSmallMarginEnd"/>
+    </tnt:ToolHeader>
+</core:FragmentDefinition>

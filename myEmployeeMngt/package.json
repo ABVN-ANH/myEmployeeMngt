@@ -20,7 +20,7 @@
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
     "mocked": "mvn spring-boot:run -Dspring-boot.run.profiles=mocked",
-    "hybrid": "mvn spring-boot:run -Dspring-boot.run.profiles=cloud", 
+    "hybrid": "mvn spring-boot:run -Dspring-boot.run.profiles=cloud",
     "hana": "SPRING_PROFILES_ACTIVE=cloud cds bind --exec -- mvn spring-boot:run",
     "auth": "cds bind --exec -- npm start --prefix app/router"
   }
