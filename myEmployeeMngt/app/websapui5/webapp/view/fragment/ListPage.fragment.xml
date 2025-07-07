@@ -62,7 +62,7 @@
                                 <Text text="{dateOfBirth}" />
                                 <Text text="{role/name}" />
                                 <Text text="{hireDate}" />
-                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteButton}" type="Reject" press="onDeleteEmployee" visible="{= String(${userInfo>/userRole}) === 'Admin'}" />
+                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteButton}" type="Transparent" press="onDeleteEmployee" visible="{= String(${userInfo>/userRole}) === 'Admin'}" />
                                 <Button icon="sap-icon://navigation-right-arrow" tooltip="{i18n>editButton}" type="Transparent" press="onEditEmployee" />
                             </cells>
                         </ColumnListItem>
