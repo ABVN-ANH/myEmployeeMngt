@@ -1,5 +1,10 @@
 {
   "requires": {
-    "db": "hana"
+    "db": "hana",
+    "[hybrid]": {
+      "auth": "xsuaa"
+    },
+    "destinations": true,
+    "html5-runtime": true
   }
 }

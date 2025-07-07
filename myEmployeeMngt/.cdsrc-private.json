@@ -14,6 +14,34 @@
         "vcap": {
           "name": "db"
         }
+      },
+      "destinations": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
+          "org": "cd52ef19trial",
+          "space": "dev",
+          "instance": "myEmployeeMngt-destination",
+          "key": "myEmployeeMngt-destination-key"
+        },
+        "kind": "destinations",
+        "vcap": {
+          "name": "destinations"
+        }
+      },
+      "auth": {
+        "binding": {
+          "type": "cf",
+          "apiEndpoint": "https://api.cf.us10-001.hana.ondemand.com",
+          "org": "cd52ef19trial",
+          "space": "dev",
+          "instance": "myEmployeeMngt-uaa",
+          "key": "myEmployeeMngt-uaa-key"
+        },
+        "kind": "xsuaa-auth",
+        "vcap": {
+          "name": "auth"
+        }
       }
     }
   }

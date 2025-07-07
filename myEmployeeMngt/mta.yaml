@@ -5,9 +5,12 @@ version: 1.0.0-SNAPSHOT
 modules:
   - name: myEmployeeMngt-srv
     type: java
-    path: gen/srv
+    path: srv
     requires:
+      - name: app-api
       - name: myEmployeeMngt-db
+      - name: myEmployeeMngt-auth
+      - name: myEmployeeMngt-destination-service
     properties:
       JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
       JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
@@ -24,7 +27,6 @@ modules:
       builder: custom
       commands:
         - mvn clean package -DskipTests=true --batch-mode
-
 
   - name: myEmployeeMngt-app-content
     type: com.sap.application.content
@@ -49,6 +51,8 @@ modules:
       commands:
         - npm install
         - npm run build:cf
+        - npm ci
+        - npm run build
       supported-platforms:
         []
 
@@ -63,6 +67,30 @@ modules:
         - npm run build
     requires:
       - name: myEmployeeMngt-db
+
+  - name: myEmployeeMngt
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: myEmployeeMngt-destination-service
+      - name: myEmployeeMngt-html5-runtime
+      - name: myEmployeeMngt-auth
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+          url: ${default-url}
 resources:
   - name: myEmployeeMngt-repo-host
     type: org.cloudfoundry.managed-service
@@ -93,6 +121,20 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+  - name: myEmployeeMngt-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: myEmployeeMngt-${org}-${space}
+        tenant-mode: dedicated
+  - name: myEmployeeMngt-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

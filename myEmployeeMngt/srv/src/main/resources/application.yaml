@@ -45,14 +45,6 @@ spring:
     driver-class-name: com.sap.db.jdbc.Driver
 cds:
   index-page.enabled: true
-  sql.hana.search:
-    fuzzy: true
-    fuzzinessThreshold: 0.9
-  messaging.services:
-    bupa-messaging:
-      kind: enterprise-messaging
-      format: cloudevents
-      subscribe-prefix: sap/S4HANAOD/java/ce/
 ---         
 server.servlet.encoding:
   charset: UTF-8
