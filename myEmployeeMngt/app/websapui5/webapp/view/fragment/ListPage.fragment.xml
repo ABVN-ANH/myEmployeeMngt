@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox class="sapUiSmallMargin">
+        <Panel headerText="{i18n>listTitle}" class="sapUiResponsiveMargin" width="auto">
+            <content>
+                <Table id="employeeTable" growing="true" growingThreshold="20" class="sapUiResponsiveMargin" width="auto" items="{
+                            path: '/Employees',
+                            parameters: {
+                                $expand: 'department'
+                            },
+                            sorter: { path: 'firstName', descending: false }
+                        }" selectionChange="onRowSelect" mode="SingleSelectMaster">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Label text="{i18n>department}" />
+                            <Select id="departmentSearch" selectedKey="{search>/filters/department}" change="onSearchChange" items="{search>/departments}">
+                                <core:Item key="{search>key}" text="{search>text}" />
+                            </Select>
+                            <Label text="{i18n>role}" />
+                            <Select id="roleSearch" selectedKey="{search>/filters/role}" change="onSearchChange" items="{search>/roles}">
+                                <core:Item key="{search>key}" text="{search>text}" />
+                            </Select>
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column>
+                            <Text text="{i18n>department}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>name}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>email}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>dob}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>role}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>salary}" />
+                        </Column>
+                        <Column>
+                            <Text text="{i18n>hireDate}" />
+                        </Column>
+                        <Column width="4rem">
+                            <Text text=""/>
+                        </Column>
+                        <Column width="4rem">
+                            <Text text=""/>
+                        </Column>
+                        <Column />
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle" type="Active" press="onEditEmployee">
+                            <cells>
+                                <Text text="{department/name}" />
+                                <Text text="{firstName} {lastName}" />
+                                <Text text="{email}" />
+                                <Text text="{dateOfBirth}" />
+                                <Text text="{role/name}" />
+                                <Text text="{hireDate}" />
+                                <Button icon="sap-icon://delete" tooltip="{i18n>deleteButton}" type="Reject" press="onDeleteEmployee" visible="{= String(${userInfo>/userRole}) === 'Admin'}" />
+                                <Button icon="sap-icon://navigation-right-arrow" tooltip="{i18n>editButton}" type="Transparent" press="onEditEmployee" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </content>
+        </Panel>
+    </VBox>
+</core:FragmentDefinition>
