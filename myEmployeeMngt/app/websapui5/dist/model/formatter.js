@@ -1,0 +1,2 @@
+sap.ui.define([],function(){"use strict";return{salaryText:function(e){if(e===undefined||e===null){return"Salary is empty"}const r=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"});return r.format(parseFloat(e.replace(/,/g,"")))}}});
+//# sourceMappingURL=formatter.js.map
