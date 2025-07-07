@@ -1,0 +1,61 @@
+@server = http://localhost:8080/odata/v4/EmployeeManagementService
+@admin = Authorization: Basic admin:
+@viewer = Authorization: Basic viewer:
+@usesid = e346084c-bf7c-4d58-8e90-dcc684c35a87
+
+
+### ------------------------------------------------------------------------
+# Get all employees
+GET {{server}}/Employees?$count=true
+{{admin}}
+# {{viewer}}
+
+### ------------------------------------------------------------------------
+# Get all employees
+GET {{server}}/Employees?$expand=role&$filter=role_ID eq d1e1a1c0-0001-4000-8000-000000000001
+{{admin}}
+
+### ------------------------------------------------------------------------
+# Get all department 
+GET {{server}}/Departments(d1e1a1c0-0001-4000-8000-000000000001)
+# {{admin}}
+{{viewer}}
+
+
+### 2. Admin can update employee information
+PATCH {{server}}/Employees(c1e1a1c0-0001-4000-8000-000000000001)
+{{admin}}
+# {{viewer}}
+Content-Type: application/json
+
+{
+  "lastName": "Huynh Nguyen Lan"
+}
+
+
+### 3. Admin can delete employee information
+DELETE {{server}}/Employees({{usesid}})
+{{admin}}
+# {{viewer}}
+
+### 4. Admin can create new employee
+POST {{server}}/Employees
+{{admin}}
+# {{viewer}}
+Content-Type: application/json
+
+{
+      "firstName": "Test",
+      "lastName": "Post",
+      "dateOfBirth": "2002-10-09",
+      "gender": "Female",
+      "email": "testpost@abeam.com",
+      "hireDate": "2022-01-01",
+      "department_ID": "d1e1a1c0-0001-4000-8000-000000000001",
+      "role_ID": "b1e1a1c0-0006-4000-8000-000000000006"
+}
+
+### 5. View user role
+GET {{server}}/userInfo
+# {{admin}}
+{{viewer}}

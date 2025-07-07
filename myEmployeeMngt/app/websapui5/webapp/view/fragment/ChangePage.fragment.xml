@@ -1,0 +1,90 @@
+<core:FragmentDefinition xmlns:macros="sap.fe.macros"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox class="sapUiSmallMargin">
+        <f:Form id="FormChange" editable="true">
+            <f:toolbar>
+                <OverflowToolbar>
+                    <Title text="{i18n>detailTitle}"/>
+                    <ToolbarSpacer/>
+                    <Button text="{i18n>saveButton}" type="Emphasized" press="onSave" visible="{= ${userInfo>/userRole} === 'Admin' }" class="sapUiSmallMarginEnd"/>
+                    <Button text="{i18n>cancelButton}" type="Emphasized" press="onCancel"/>
+                </OverflowToolbar>
+            </f:toolbar>
+            <f:layout>
+                <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false" />
+            </f:layout>
+            <f:formContainers>
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="{i18n>firstName}">
+                            <f:fields>
+                                <Input id="firstNameInput2" value="{employee>/firstName}" placeholder="{i18n>firstNameInput}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }" />
+                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>lastName}">
+                            <f:fields>
+                                <Input id="lastNameInput2" value="{employee>/lastName}" placeholder="{i18n>lastNameInput}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }" />
+                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>department}">
+                            <f:fields>
+                                <Select id="departmentSelect2" selectedKey="{employee>/department_ID}" items="{select>/departments}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }">
+                                    <core:Item key="{select>key}" text="{select>text}" />
+                                </Select>
+                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+
+                            </f:fields>
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>role}">
+                            <f:fields>
+                                <Select id="roleSelect2" selectedKey="{employee>/role_ID}" items="{select>/roles}" class="sapUiSmallMarginBottom" editable="{= ${userInfo>/userRole} === 'Admin' }" change="onRoleChange">
+                                    <core:Item key="{select>key}" text="{select>text}" />
+                                </Select>
+                                <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+
+                            </f:fields>
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+
+                <f:FormContainer>
+                    <f:formElements>
+                        <f:FormElement label="">
+                            <l:VerticalLayout>
+                                <Avatar id="avatar" displaySize="M" displayShape="Circle" tooltip="Click to upload avatar (picture)" badgeIcon="sap-icon://edit" />
+                            </l:VerticalLayout>
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>dob}">
+                            <DatePicker id="dobPicker" value="{employee>/dateOfBirth}" valueFormat="dd MMMM, yyyy" displayFormat="dd MMMM, yyyy" editable="{= ${userInfo>/userRole} === 'Admin' }" />
+                            <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>hireDate}">
+                            <DatePicker id="wfromPicker" value="{employee>/hireDate}" valueFormat="dd MMMM, yyyy" displayFormat="dd MMMM, yyyy" editable="{= ${userInfo>/userRole} === 'Admin' }" change=".onHireDateChange" class="sapUiSmallMarginBottom"/>
+                            <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>email}">
+                            <Input id="emailInputc" value="{employee>/email}" placeholder="{i18n>emailInput}" type="Email" class="sapUiSmallMarginBottom" valueState="{form>/validation/emailState}" valueStateText="{form>/validation/emailStateText}" change="onEmailChange" editable="{= ${userInfo>/userRole} === 'Admin' }" />
+                            <Text text="*" class="redStar" visible="{= ${userInfo>/userRole} === 'Admin' }" />
+                        </f:FormElement>
+
+                        <f:FormElement label="{i18n>inputSalary}">
+                            <Input id="salaryInput2" value="{employee>/salary}" type="Number" editable="false" class="sapUiSmallMarginBottom" />
+                        </f:FormElement>
+                    </f:formElements>
+                </f:FormContainer>
+            </f:formContainers>
+        </f:Form>
+    </VBox>
+</core:FragmentDefinition>
